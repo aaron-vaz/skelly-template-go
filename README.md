@@ -1,1 +1,1 @@
-# {{ .Inputs.projectName }}
+# {{.Inputs.ProjectName.Value}}

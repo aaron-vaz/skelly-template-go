@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/aaron-vaz/{{ .Inputs.projectName }}/internal"
+	"github.com/aaron-vaz/{{.Inputs.ProjectName.Value}}/internal"
 )
 
 func main() {

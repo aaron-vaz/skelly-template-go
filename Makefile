@@ -5,7 +5,7 @@ BUILD_DIR := ${PWD}/build
 BINARY_DIR := ${BUILD_DIR}/bin
 
 # Binary name
-BINARY_NAME := {{ .Inputs.projectName }}
+BINARY_NAME := {{.Inputs.ProjectName.Value}}
 
 # Version information
 VERSION := $(shell git describe --tags --always --dirty)

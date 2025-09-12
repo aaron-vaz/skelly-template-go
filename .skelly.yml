@@ -1,0 +1,5 @@
+name: skelly-template-go
+description: A template for generating Go projects using Skelly
+inputs:
+  projectName:
+    description: The name of the Go project

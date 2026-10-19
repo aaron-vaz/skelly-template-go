@@ -26,7 +26,8 @@ jobs:
         go-version: '1.26'
 
     - name: Install skelly
-      run: go install github.com/aaron-vaz/skelly/cmd/skelly@main
+      # The module proxy can serve an old main for a while after a merge, so ask git directly
+      run: GOPROXY=direct go install github.com/aaron-vaz/skelly/cmd/skelly@main
 
     - name: Render ${{ matrix.type }}
       run: skelly init . -dst "$RUNNER_TEMP/example-app" -no-input -set project_name=example-app -set project_type=${{ matrix.type }}

@@ -32,8 +32,7 @@ exclude:
       - Dockerfile
       - .dockerignore
       - github/workflows/docker.yml
-  - when: "true"
-    paths:
+  - paths:
       - TEMPLATE.md
       - .github
 # The files for generated projects ship as github/, so GitHub does not run them (or

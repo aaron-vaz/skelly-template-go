@@ -20,16 +20,25 @@ Inputs are asked in alphabetical order: `GoVersion` (default `1.26`), `Owner` (d
 
 ## How it works
 
-`.skelly.yml` uses two skelly features to produce both variants from one tree:
+`.skelly.yml` uses three skelly features to produce both variants from one tree:
 
 - `choices` on `ProjectType`, so a typo is rejected instead of producing a half-empty project.
 - `exclude` entries, each removing a path when `ProjectType` is not the one that needs it. `main.go`, the tests and the `Makefile` are small enough to switch with `{{if}}` inside the file.
-
 - `rename`, which moves `github/` to `.github` when the project is generated. The workflows and `dependabot.yml` for generated projects live in `github/`, so GitHub does not run them, and Dependabot does not read them, in this repository. The real `.github/` here holds only the template's own CI.
 
 `github` is listed under `raw` because workflows use `${{ }}`. `raw` and `exclude` use the template's own names, which is why they say `github/...`. `TEMPLATE.md` and the real `.github` are excluded unconditionally: they belong to this repository, not to generated projects.
 
 When you edit a workflow for generated projects, edit it under `github/workflows/`. It is not run here, so check changes with the test below.
+
+## Using it from a script or an AI agent
+
+```bash
+# What does the template ask for? JSON with defaults, choices and which inputs are required
+skelly inspect go
+
+# Create a project without any prompt
+skelly init go -dst ./my-app -no-input -set ProjectName=my-app -set ProjectType=service
+```
 
 ## Testing the template
 

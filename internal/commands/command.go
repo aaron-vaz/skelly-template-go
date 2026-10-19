@@ -7,7 +7,7 @@ import (
 )
 
 // AppName is the name of the binary, used in help and version output.
-const AppName = "{{.Inputs.ProjectName.Value}}"
+const AppName = "{{.Inputs.project_name.Value}}"
 
 // Command represents an executable command in the application
 type Command interface {

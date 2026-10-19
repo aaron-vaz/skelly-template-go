@@ -5,8 +5,8 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/version"
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/version"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/view"
 )
 
 // VersionCommand outputs the current build version.

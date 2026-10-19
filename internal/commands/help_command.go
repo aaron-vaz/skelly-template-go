@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/view"
 )
 
 // HelpCommand handles the display of usage instructions and command descriptions.

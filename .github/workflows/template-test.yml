@@ -29,7 +29,7 @@ jobs:
       run: go install github.com/aaron-vaz/skelly/cmd/skelly@main
 
     - name: Render ${{ matrix.type }}
-      run: skelly init . -dst "$RUNNER_TEMP/example-app" -no-input -set ProjectName=example-app -set ProjectType=${{ matrix.type }}
+      run: skelly init . -dst "$RUNNER_TEMP/example-app" -no-input -set project_name=example-app -set project_type=${{ matrix.type }}
 
     - name: Install tooling
       working-directory: ${{ runner.temp }}/example-app

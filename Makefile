@@ -1,14 +1,14 @@
 # Project
-BINARY_NAME := {{.Inputs.ProjectName.Value}}
-MODULE := github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}
-{{- if eq .Inputs.ProjectType.Value "cli"}}
+BINARY_NAME := {{.Inputs.project_name.Value}}
+MODULE := github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}
+{{- if eq .Inputs.project_type.Value "cli"}}
 
 # Release targets
 RELEASE_OS := linux darwin
 RELEASE_ARCH := amd64 arm64
 {{- end}}
 
-.PHONY: all clean build test lint fmt tidy deps{{if eq .Inputs.ProjectType.Value "cli"}} release $(RELEASE_OS){{else}} run docker{{end}}
+.PHONY: all clean build test lint fmt tidy deps{{if eq .Inputs.project_type.Value "cli"}} release $(RELEASE_OS){{else}} run docker{{end}}
 
 # Build directories
 BUILD_DIR := ${PWD}/build
@@ -47,7 +47,7 @@ test: ${BUILD_DIR}
 build: ${BUILD_DIR}
 	@echo "Building binary..."
 	@go build ${GCFLAGS} ${ASMFLAGS} ${LDFLAGS} -o ${BUILD_DIR}/${BINARY_NAME} ./cmd/${BINARY_NAME}
-{{- if eq .Inputs.ProjectType.Value "cli"}}
+{{- if eq .Inputs.project_type.Value "cli"}}
 
 # Build for all platforms
 release: ${BUILD_DIR} test $(RELEASE_OS)

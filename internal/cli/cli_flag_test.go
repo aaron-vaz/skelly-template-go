@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/view"
 )
 
 func TestFlagCommandInvoker_Execute(t *testing.T) {

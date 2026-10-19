@@ -25,4 +25,4 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}
+        - github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}

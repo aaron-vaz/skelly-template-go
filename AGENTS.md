@@ -4,17 +4,17 @@ Guidelines for agentic coding agents working in this repository.
 
 ## Project Overview
 
-`{{.Inputs.ProjectName.Value}}` is a Go {{if eq .Inputs.ProjectType.Value "cli"}}command line application{{else}}web service{{end}}.
+`{{.Inputs.project_name.Value}}` is a Go {{if eq .Inputs.project_type.Value "cli"}}command line application{{else}}web service{{end}}.
 
-- **Language**: Go {{.Inputs.GoVersion.Value}}
-- **Binary**: `{{.Inputs.ProjectName.Value}}`
-- **Module**: `github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}`
+- **Language**: Go {{.Inputs.go_version.Value}}
+- **Binary**: `{{.Inputs.project_name.Value}}`
+- **Module**: `github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}`
 
 ## Build/Lint/Test Commands
 
 ```bash
 make all        # Runs lint, test, and build
-make build      # Build binary for current platform -> build/{{.Inputs.ProjectName.Value}}
+make build      # Build binary for current platform -> build/{{.Inputs.project_name.Value}}
 make test       # Run all tests with the race detector and coverage -> build/coverage.out
 make lint       # Run golangci-lint (install it with make deps)
 make fmt        # Format code
@@ -27,9 +27,9 @@ go test -v -race -run TestName ./...      # Run a single test
 ### Package Structure
 
 ```
-cmd/{{.Inputs.ProjectName.Value}}/        # Main entry point, wiring only
+cmd/{{.Inputs.project_name.Value}}/        # Main entry point, wiring only
 internal/                                 # Private packages (not importable externally)
-{{- if eq .Inputs.ProjectType.Value "cli"}}
+{{- if eq .Inputs.project_type.Value "cli"}}
   cli/                                    # CLI parsing and command invocation
   commands/                               # Command implementations
   view/                                   # User interface (I/O)
@@ -45,7 +45,7 @@ internal/                                 # Private packages (not importable ext
 Group imports with blank lines between:
 1. Standard library
 2. External/third-party packages
-3. Local packages (github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/...)
+3. Local packages (github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/...)
 
 ### Naming Conventions
 
@@ -79,15 +79,15 @@ Group imports with blank lines between:
 - Name test functions `TestFunctionName` or `TestFunctionName_Scenario`
 - Use table-driven tests for multiple cases
 - **BDD Syntax**: Structure tests using BDD-style comments (`// Given`, `// When`, `// Then`, `// And`)
-- **Integration Tests**: Place end-to-end tests alongside `main` (`cmd/{{.Inputs.ProjectName.Value}}/main_test.go`), compiling the binary in `TestMain` and running it as a sub-process
-{{- if eq .Inputs.ProjectType.Value "service"}}
+- **Integration Tests**: Place end-to-end tests alongside `main` (`cmd/{{.Inputs.project_name.Value}}/main_test.go`), compiling the binary in `TestMain` and running it as a sub-process
+{{- if eq .Inputs.project_type.Value "service"}}
 - Test handlers with `net/http/httptest`; no real network needed
 {{- end}}
 
 ### Context Usage
 
 Pass `context.Context` as the first parameter of anything that blocks or does I/O, and honour its cancellation.
-{{- if eq .Inputs.ProjectType.Value "service"}}
+{{- if eq .Inputs.project_type.Value "service"}}
 
 ### Service
 

@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/commands"
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/commands"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/view"
 )
 
 // FlagCommandInvoker is an implementation of commands.Invoker that maps

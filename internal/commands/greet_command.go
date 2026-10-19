@@ -6,7 +6,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/view"
 )
 
 // GreetCommand is an example command showing how flags and arguments are

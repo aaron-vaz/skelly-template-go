@@ -1,3 +1,3 @@
-module github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}
+module github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}
 
-go {{.Inputs.GoVersion.Value}}
+go {{.Inputs.go_version.Value}}

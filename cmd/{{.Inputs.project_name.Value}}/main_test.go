@@ -1,4 +1,4 @@
-{{- if eq .Inputs.ProjectType.Value "cli" -}}
+{{- if eq .Inputs.project_type.Value "cli" -}}
 package main
 
 import (
@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const binName = "{{.Inputs.ProjectName.Value}}_test_bin"
+const binName = "{{.Inputs.project_name.Value}}_test_bin"
 
 func TestMain(m *testing.M) {
 	// Build the CLI binary
@@ -36,7 +36,7 @@ func TestIntegration(t *testing.T) {
 	}{
 		{name: "help", args: []string{"help"}, wantOut: "USAGE:"},
 		{name: "no arguments shows help", wantOut: "USAGE:"},
-		{name: "version", args: []string{"version"}, wantOut: "{{.Inputs.ProjectName.Value}} version dev"},
+		{name: "version", args: []string{"version"}, wantOut: "{{.Inputs.project_name.Value}} version dev"},
 		{name: "greet", args: []string{"greet", "-name", "Gopher"}, wantOut: "Hello, Gopher!"},
 		{name: "unknown command", args: []string{"nope"}, wantOut: "unknown command: nope", wantFail: true},
 	}
@@ -76,7 +76,7 @@ import (
 	"time"
 )
 
-const binName = "{{.Inputs.ProjectName.Value}}_test_bin"
+const binName = "{{.Inputs.project_name.Value}}_test_bin"
 
 func TestMain(m *testing.M) {
 	// Build the service binary

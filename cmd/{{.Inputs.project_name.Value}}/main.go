@@ -1,4 +1,4 @@
-{{- if eq .Inputs.ProjectType.Value "cli" -}}
+{{- if eq .Inputs.project_type.Value "cli" -}}
 package main
 
 import (
@@ -8,8 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/cli"
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/cli"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/view"
 )
 
 func main() {
@@ -43,8 +43,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/config"
-	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/server"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/config"
+	"github.com/{{.Inputs.owner.Value}}/{{.Inputs.project_name.Value}}/internal/server"
 )
 
 func main() {

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aaron-vaz/skelly/main/skelly.schema.json
 name: skelly-template-go
 description: A Go command line application or web service, with Makefile, linting, tests, CI and releases
 inputs:
@@ -18,25 +19,20 @@ raw:
   - .github
 # Everything that only applies to one kind of project, plus the template's own files
 exclude:
-  - path: internal/cli
-    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
-  - path: internal/commands
-    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
-  - path: internal/view
-    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
-  - path: .github/workflows/release.yml
-    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
-  - path: internal/config
-    when: '{{ne .Inputs.ProjectType.Value "service"}}'
-  - path: internal/server
-    when: '{{ne .Inputs.ProjectType.Value "service"}}'
-  - path: Dockerfile
-    when: '{{ne .Inputs.ProjectType.Value "service"}}'
-  - path: .dockerignore
-    when: '{{ne .Inputs.ProjectType.Value "service"}}'
-  - path: .github/workflows/docker.yml
-    when: '{{ne .Inputs.ProjectType.Value "service"}}'
-  - path: TEMPLATE.md
-    when: "true"
-  - path: .github/workflows/template-test.yml
-    when: "true"
+  - when: '{{ne .Inputs.ProjectType.Value "cli"}}'
+    paths:
+      - internal/cli
+      - internal/commands
+      - internal/view
+      - .github/workflows/release.yml
+  - when: '{{ne .Inputs.ProjectType.Value "service"}}'
+    paths:
+      - internal/config
+      - internal/server
+      - Dockerfile
+      - .dockerignore
+      - .github/workflows/docker.yml
+  - when: "true"
+    paths:
+      - TEMPLATE.md
+      - .github/workflows/template-test.yml

@@ -1,0 +1,82 @@
+package commands
+
+import (
+	"context"
+	"flag"
+	"fmt"
+	"slices"
+	"strings"
+
+	"github.com/{{.Inputs.Owner.Value}}/{{.Inputs.ProjectName.Value}}/internal/view"
+)
+
+// HelpCommand handles the display of usage instructions and command descriptions.
+type HelpCommand struct {
+	commands map[string]Command
+	ui       view.UI
+}
+
+// Name returns the CLI identifier for this command.
+func (c *HelpCommand) Name() string {
+	return "help"
+}
+
+// Description returns a short summary shown in the help output.
+func (c *HelpCommand) Description() string {
+	return "Show command help"
+}
+
+// Init is a no-op as the help command has no flags.
+func (c *HelpCommand) Init(flags *flag.FlagSet) {}
+
+// Run prints the application help, or the help for a requested command.
+func (c *HelpCommand) Run(ctx context.Context, args []string) error {
+	if len(args) == 0 {
+		return c.ui.RenderInfo(c.usage())
+	}
+
+	cmdName := args[0]
+	cmd, ok := c.commands[cmdName]
+	if !ok {
+		_ = c.ui.RenderInfo(c.usage())
+		return fmt.Errorf("unknown command: %s", cmdName)
+	}
+
+	var defaults strings.Builder
+	flags := flag.NewFlagSet(cmd.Name(), flag.ContinueOnError)
+	flags.SetOutput(&defaults)
+	cmd.Init(flags)
+	flags.PrintDefaults()
+
+	return c.ui.RenderInfo(fmt.Sprintf("Usage: %s %s [options]\n\n%s\n\nOPTIONS:\n%s", AppName, cmdName, cmd.Description(), defaults.String()))
+}
+
+func (c *HelpCommand) usage() string {
+	var b strings.Builder
+	b.WriteString("USAGE:\n")
+	fmt.Fprintf(&b, "    %s COMMAND [OPTIONS]\n\n", AppName)
+	b.WriteString("COMMANDS:\n")
+
+	// Map iteration order is random, so sort for stable output
+	names := make([]string, 0, len(c.commands))
+	for name := range c.commands {
+		names = append(names, name)
+	}
+	slices.Sort(names)
+
+	for _, name := range names {
+		fmt.Fprintf(&b, "    %-11s %s\n", name, c.commands[name].Description())
+	}
+
+	fmt.Fprintf(&b, "\nRun '%s help COMMAND' for command-specific help", AppName)
+	return b.String()
+}
+
+// NewHelpCommand returns a HelpCommand that knows the full map of available
+// commands in order to print their documentation.
+func NewHelpCommand(commands map[string]Command, ui view.UI) Command {
+	return &HelpCommand{
+		commands: commands,
+		ui:       ui,
+	}
+}

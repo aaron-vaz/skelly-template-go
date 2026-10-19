@@ -1,5 +1,42 @@
 name: skelly-template-go
-description: A template for generating Go projects using Skelly
+description: A Go command line application or web service, with Makefile, linting, tests, CI and releases
 inputs:
   ProjectName:
-    description: The name of the Go project
+    description: The name of the project, also used as the binary name
+  ProjectType:
+    description: What to generate, a command line app or a web service
+    default: cli
+    choices: [cli, service]
+  Owner:
+    description: The GitHub user or organisation that will own the repository
+    default: aaron-vaz
+  GoVersion:
+    description: The Go version to target
+    default: "1.26"
+# GitHub workflow files use ${{ }} themselves, so they are copied as-is
+raw:
+  - .github
+# Everything that only applies to one kind of project, plus the template's own files
+exclude:
+  - path: internal/cli
+    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
+  - path: internal/commands
+    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
+  - path: internal/view
+    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
+  - path: .github/workflows/release.yml
+    when: '{{ne .Inputs.ProjectType.Value "cli"}}'
+  - path: internal/config
+    when: '{{ne .Inputs.ProjectType.Value "service"}}'
+  - path: internal/server
+    when: '{{ne .Inputs.ProjectType.Value "service"}}'
+  - path: Dockerfile
+    when: '{{ne .Inputs.ProjectType.Value "service"}}'
+  - path: .dockerignore
+    when: '{{ne .Inputs.ProjectType.Value "service"}}'
+  - path: .github/workflows/docker.yml
+    when: '{{ne .Inputs.ProjectType.Value "service"}}'
+  - path: TEMPLATE.md
+    when: "true"
+  - path: .github/workflows/template-test.yml
+    when: "true"

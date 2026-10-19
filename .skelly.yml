@@ -16,7 +16,7 @@ inputs:
     default: "1.26"
 # GitHub workflow files use ${{ }} themselves, so they are copied as-is
 raw:
-  - .github
+  - github
 # Everything that only applies to one kind of project, plus the template's own files
 exclude:
   - when: '{{ne .Inputs.ProjectType.Value "cli"}}'
@@ -24,15 +24,20 @@ exclude:
       - internal/cli
       - internal/commands
       - internal/view
-      - .github/workflows/release.yml
+      - github/workflows/release.yml
   - when: '{{ne .Inputs.ProjectType.Value "service"}}'
     paths:
       - internal/config
       - internal/server
       - Dockerfile
       - .dockerignore
-      - .github/workflows/docker.yml
+      - github/workflows/docker.yml
   - when: "true"
     paths:
       - TEMPLATE.md
-      - .github/workflows/template-test.yml
+      - .github
+# The files for generated projects ship as github/, so GitHub does not run them (or
+# Dependabot) in this repository, where the real .github holds the template's own CI
+rename:
+  - from: github
+    to: .github

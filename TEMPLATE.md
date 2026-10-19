@@ -25,13 +25,17 @@ Inputs are asked in alphabetical order: `GoVersion` (default `1.26`), `Owner` (d
 - `choices` on `ProjectType`, so a typo is rejected instead of producing a half-empty project.
 - `exclude` entries, each removing a path when `ProjectType` is not the one that needs it. `main.go`, the tests and the `Makefile` are small enough to switch with `{{if}}` inside the file.
 
-`.github` is listed under `raw` because workflows use `${{ }}`. `TEMPLATE.md` and `.github/workflows/template-test.yml` are excluded unconditionally: they belong to this repository, not to generated projects.
+- `rename`, which moves `github/` to `.github` when the project is generated. The workflows and `dependabot.yml` for generated projects live in `github/`, so GitHub does not run them, and Dependabot does not read them, in this repository. The real `.github/` here holds only the template's own CI.
+
+`github` is listed under `raw` because workflows use `${{ }}`. `raw` and `exclude` use the template's own names, which is why they say `github/...`. `TEMPLATE.md` and the real `.github` are excluded unconditionally: they belong to this repository, not to generated projects.
+
+When you edit a workflow for generated projects, edit it under `github/workflows/`. It is not run here, so check changes with the test below.
 
 ## Testing the template
 
 `.github/workflows/template-test.yml` renders each variant with skelly and runs `make all` on the result. To do the same locally:
 
 ```bash
-printf '\n\nexample-app\ncli\n' | skelly init . -dst /tmp/example-app
+skelly init . -dst /tmp/example-app -no-input -set ProjectName=example-app -set ProjectType=cli
 cd /tmp/example-app && make deps all
 ```

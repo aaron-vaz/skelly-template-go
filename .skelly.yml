@@ -1,5 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aaron-vaz/skelly/main/skelly.schema.json
 name: skelly-template-go
-description: A template for generating Go projects using Skelly
+description: A Go command line application or web service, with Makefile, linting, tests, CI and releases
 inputs:
-  ProjectName:
-    description: The name of the Go project
+  project_name:
+    description: The name of the project, also used as the binary name
+  project_type:
+    description: What to generate, a command line app or a web service
+    default: cli
+    choices: [cli, service]
+  owner:
+    description: The GitHub user or organisation that will own the repository
+    default: aaron-vaz
+  go_version:
+    description: The Go version to target
+    default: "1.26"
+# GitHub workflow files use ${{ }} themselves, so they are copied as-is
+raw:
+  - github
+# Everything that only applies to one kind of project, plus the template's own files
+exclude:
+  - when: '{{ne .Inputs.project_type.Value "cli"}}'
+    paths:
+      - internal/cli
+      - internal/commands
+      - internal/view
+      - github/workflows/release.yml
+  - when: '{{ne .Inputs.project_type.Value "service"}}'
+    paths:
+      - internal/config
+      - internal/server
+      - Dockerfile
+      - .dockerignore
+      - github/workflows/docker.yml
+  - paths:
+      - TEMPLATE.md
+      - .github
+# The files for generated projects ship as github/, so GitHub does not run them (or
+# Dependabot) in this repository, where the real .github holds the template's own CI
+rename:
+  - from: github
+    to: .github

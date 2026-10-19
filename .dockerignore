@@ -1,0 +1,7 @@
+.git
+.github
+.vscode
+.idea
+build/
+coverage.out
+*_test_bin

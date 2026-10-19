@@ -1,2 +1,7 @@
 .vscode
+.idea
+
+# Build artifacts
 build/
+coverage.out
+*_test_bin

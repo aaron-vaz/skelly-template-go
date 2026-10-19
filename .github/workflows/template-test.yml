@@ -29,8 +29,7 @@ jobs:
       run: go install github.com/aaron-vaz/skelly/cmd/skelly@main
 
     - name: Render ${{ matrix.type }}
-      # Inputs are asked in alphabetical order: GoVersion, Owner, ProjectName, ProjectType
-      run: printf '\n\nexample-app\n%s\n' "${{ matrix.type }}" | skelly init . -dst "$RUNNER_TEMP/example-app"
+      run: skelly init . -dst "$RUNNER_TEMP/example-app" -no-input -set ProjectName=example-app -set ProjectType=${{ matrix.type }}
 
     - name: Install tooling
       working-directory: ${{ runner.temp }}/example-app
